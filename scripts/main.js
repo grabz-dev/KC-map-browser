@@ -354,7 +354,7 @@ document.onreadystatechange = function() {
                     
                     //Query for the thumbnail.
                     let thumbnail = node.querySelector("img[data-id=thumbnail]");
-                    thumbnail.src = `http://knucklecracker.com/${web[data.game]}/queryMaps.php?query=thumbnailid&id=` + map.id;
+                    thumbnail.src = `https://knucklecracker.com/${web[data.game]}/queryMaps.php?query=thumbnailid&id=` + map.id;
 
                     //Calculate the thumbnail aspect ratio so that we can position it properly.
                     let aspectRatio = map.width / map.height;
