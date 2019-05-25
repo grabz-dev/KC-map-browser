@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Knuckle Cracker Map Browser">
+	    <meta name="author" content="Grabz">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <link rel="stylesheet" href="css/lib/bootstrap_v4.3.1.css"/>
+        <link rel="stylesheet" href="css/bootstrap_addon.css?v=1"/>
+        <link rel="stylesheet" href="css/style.css?v=1"/>
+
+        <script data-main="scripts/main" src="scripts/require.js"></script>
+
+        <title>Knuckle Cracker Map Browser</title>
+
+        <template data-id="mapBrowserElement">
+            <div class="col container kc-page-entry">
+                <div class="row">
+                    <div class="col-2 text-left">
+                        <div class="row">Map #:</div>
+                        <div class="row">Title:</div>
+                        <div class="row">Author:</div>
+                        <div class="row">~Time:</div>
+                        <div class="row">Rating:</div>
+                        <div class="row">Plays:</div>
+                        <div class="row">DLoads:</div>
+                        <div class="row">Desc:</div>
+                    </div>
+                    <div class="col-5 text-left">
+                        <div class="row" data-id="id"></div>
+                        <div class="row font-weight-bold col-mapname" data-id="title"></div>
+                        <div class="row" data-id="author"></div>
+                        <div class="row" data-id="median"></div>
+                        <div class="row"><span class="font-weight-bold" data-id="rating"></span><div class="row kc-page-entry-ratings-num" style="position:absolute">Num: <span data-id="ratings"></span></div></div>
+                        <div class="row" data-id="scores"></div>
+                        <div class="row" data-id="downloads"></div>
+                        <div class="row kc-page-entry-desc" data-id="desc"></div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row kc-page-entry-size"><span>[<span data-id="width"></span>x<span data-id="height"></span>]</span></div>
+                        <div class="row">
+                            <img data-id="thumbnail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </head>
+    <body>
+        <div class="container text-center" style="background-color: rgba(1, 1, 1, 0.5);">
+            <div class="row">
+                <div class="col">
+                    Knuckle Cracker Map Browser
+                </div>
+            </div>
+
+            <div style="font-family: Tempesta; font-size: 15px;">
+                <div class="row no-gutters">
+                    <div class="col-1"></div>
+                    <div class="col">
+                        <div class="row no-gutters">
+                            <div class="col-auto">
+                                <div class="row kc-box">
+                                    <div class="col" id="buttongroupGame">
+                                        <div class="row kc-box-title kc-box-pad">
+                                            Game
+                                        </div>
+                                        <div class="row">
+                                            <button class="btn btn-sm btn-col-game-cw3 text-right kc-box-fit" data-id="cw3">
+                                                <div class="row no-gutters align-items-center">
+                                                    <img class="col-auto" src="assets/logo_game_cw3.png" height=32 width=32>
+                                                    <div class="col">Creeper World 3</div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="row">
+                                            <button class="btn btn-sm btn-col-game-pf text-right kc-box-fit" data-id="pf">
+                                                <div class="row no-gutters align-items-center">
+                                                    <img class="col-auto" src="assets/logo_game_pf.png" height=32 width=32>
+                                                    <div class="col">Particle Fleet</div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row kc-box">
+                                    <div class="col">
+                                        <div class="row">
+                                            <button class="btn btn-sm btn-col-refresh text-center kc-box-fit" id="buttonRefreshList">
+                                                Refresh Mission List From Server
+                                            </button>
+                                        </div>
+                                        <div class="row" style="white-space: nowrap;">
+                                            <div class="col-5">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Start #:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <div class="row">
+                                                            <input style="width: 50px;" class="kc-box-fit" type="text" id="textFilterStartId">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Text:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <div class="row">
+                                                            <input class="kc-box-fit" type="text" id="textFilterText">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Min Rating:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <div class="row">
+                                                            <input style="width: 50px;" class="kc-box-fit" type="text" id="textFilterMinRating">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Num Ratings:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <div class="row">
+                                                            <input style="width: 50px;" class="kc-box-fit" type="text" id="textFilterNumRatings">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+        
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Min Width:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="row">
+                                                            <input class="kc-box-fit" type="text" id="textFilterMinWidth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Max Width:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="row">
+                                                            <input class="kc-box-fit" type="text" id="textFilterMaxWidth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Min Height:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="row">
+                                                            <input class="kc-box-fit" type="text" id="textFilterMinHeight">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="row">
+                                                            <div class="kc-box-fit text-right">Max Height:</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="row">
+                                                            <input class="kc-box-fit" type="text" id="textFilterMaxHeight">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row kc-box">
+                            <div class="col">
+                                <div class="row kc-box-title kc-box-pad">Difficulty</div>
+                                <div class="row" id="buttongroupDifficulty">
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <button class="btn btn-sm btn-col-diff-easy text-right kc-box-fit-horizontal" data-id="easy">
+                                                        <div class="row no-gutters">Easy</div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <button class="btn btn-sm btn-col-diff-medium text-right kc-box-fit-horizontal" data-id="medium">
+                                                        <div class="row no-gutters">Medium</div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <button class="btn btn-sm btn-col-diff-hard text-right kc-box-fit-horizontal" data-id="hard">
+                                                        <div class="row no-gutters">Hard</div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <button class="btn btn-sm btn-col-diff-expert text-right kc-box-fit-horizontal" data-id="expert">
+                                                        <div class="row no-gutters">Expert</div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="row">
+                                            <button class="btn btn-sm btn-col-diff-all text-right kc-box-fit" id="buttonDiffAll" data-id="any">
+                                                <div class="row no-gutters">All</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto" style="flex-basis: 150px;">
+                        <div class="row kc-box">
+                            <div class="col">
+                                <div class="row kc-box-title">
+                                    <div class="col-8 kc-box-pad text-right">Sort Order</div>
+                                    <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse"></div>
+                                    <div class="col-2 kc-box-pad-0 text-left">Rev</div>
+                                </div>
+                                <div id="checkgroupSortFilters">
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad text-right">Newest:</div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="newest"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad text-right">Rating:</div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="rating"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad text-right">Plays:</div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="scores"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad text-right" style="white-space: nowrap;">Median Time:</div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="median"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad text-right">Size:</div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="size"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 kc-box-pad">
+                                            <button class="btn btn-sm btn-col-misc text-right kc-box-fit" id="buttonSortRandom">
+                                                <div class="row no-gutters align-items-center">Random</div>
+                                            </button>
+                                        </div>
+                                        <div class="col-2 kc-box-pad"><input class="align-middle" type="checkbox" id="checkSortReverse" value="random"></div>
+                                        <div class="col-2 kc-box-pad"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+    
+                    <!--<div class="col-2">
+                        <div class="row">Sort Order</div>
+                        <div class="row">
+                            <div class="row col-9">Newest:</div>
+                            <div class="row col-9">Newest:</div>
+                        </div>
+                    </div>-->
+                </div>
+
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-2">
+                        <button class="btn btn-sm btn-col-misc" id="buttonPagePrevious"><</button>
+                    </div>
+                    <div class="col-2">
+                        Page <span id="pageCur">1</span>/<span id="pageEnd">1</span>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-sm btn-col-misc" id="buttonPageNext">></button>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row" id="page">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    Footer
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

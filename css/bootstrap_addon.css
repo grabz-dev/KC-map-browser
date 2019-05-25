@@ -1,0 +1,85 @@
+.btn {
+    font-family: "Orbitron";
+    padding: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 0;
+
+    background: #686868;
+    background: -moz-linear-gradient(68.5deg, #686868 0%, #414141 100%);
+    background: -webkit-linear-gradient(68.5deg, #686868 0%,#414141 100%);
+    background: linear-gradient(68.5deg, #686868 0%,#414141 100%);
+    border: 1px solid #00798E;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+.btn:hover {
+    color: #CCCCCC;
+}
+
+.btn img {
+    padding: 3px;
+}
+
+.btn-col-refresh {
+    background: #51708B;
+    background: -moz-linear-gradient(68.5deg, #51708B 0%, #254C6D 100%);
+    background: -webkit-linear-gradient(68.5deg, #51708B 0%,#254C6D 100%);
+    background: linear-gradient(68.5deg, #51708B 0%,#254C6D 100%);
+}
+
+.btn-col-misc {
+    background: #686868;
+    background: -moz-linear-gradient(68.5deg, #686868 0%, #414141 100%);
+    background: -webkit-linear-gradient(68.5deg, #686868 0%,#414141 100%);
+    background: linear-gradient(68.5deg, #686868 0%,#414141 100%);
+}
+
+.btn-col-game-cw3 {
+    background: #686882;
+    background: -moz-linear-gradient(68.5deg, #686882 0%, #414141 100%);
+    background: -webkit-linear-gradient(68.5deg, #686882 0%,#414141 100%);
+    background: linear-gradient(68.5deg, #686882 0%,#414141 100%);
+}
+
+.btn-col-game-pf {
+    background: #685656;
+    background: -moz-linear-gradient(68.5deg, #685656 0%, #414141 100%);
+    background: -webkit-linear-gradient(68.5deg, #685656 0%,#414141 100%);
+    background: linear-gradient(68.5deg, #685656 0%,#414141 100%);
+}
+
+.btn-col-diff-easy {
+    background: #42663F;
+    background: -moz-linear-gradient(68.5deg, #42663F 0%, #314C2F 100%);
+    background: -webkit-linear-gradient(68.5deg, #42663F 0%,#314C2F 100%);
+    background: linear-gradient(68.5deg, #42663F 0%,#314C2F 100%);
+}
+
+.btn-col-diff-medium {
+    background: #665E49;
+    background: -moz-linear-gradient(68.5deg, #665E49 0%, #4C4637 100%);
+    background: -webkit-linear-gradient(68.5deg, #665E49 0%,#4C4637 100%);
+    background: linear-gradient(68.5deg, #665E49 0%,#4C4637 100%);
+}
+
+.btn-col-diff-hard {
+    background: #664845;
+    background: -moz-linear-gradient(68.5deg, #664845 0%, #4C3634 100%);
+    background: -webkit-linear-gradient(68.5deg, #664845 0%,#4C3634 100%);
+    background: linear-gradient(68.5deg, #664845 0%,#4C3634 100%);
+}
+
+.btn-col-diff-expert {
+    background: #5F4F66;
+    background: -moz-linear-gradient(68.5deg, #5F4F66 0%, #473B4C 100%);
+    background: -webkit-linear-gradient(68.5deg, #5F4F66 0%,#473B4C 100%);
+    background: linear-gradient(68.5deg, #5F4F66 0%,#473B4C 100%);
+}
+
+.btn-col-diff-all {
+    background: #666666;
+    background: -moz-linear-gradient(68.5deg, #666666 0%, #4C4C4C 100%);
+    background: -webkit-linear-gradient(68.5deg, #666666 0%,#4C4C4C 100%);
+    background: linear-gradient(68.5deg, #666666 0%,#4C4C4C 100%);
+}

@@ -1,0 +1,101 @@
+body {
+    font-family: "Orbitron";
+    color: #dddddd;
+    background-color: #222222;
+    background-image: url("../assets/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+input[type=text] {
+    background-color: #222222;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 23px;
+}
+
+#page {
+    line-height: 1.1;
+}
+
+.kc-page-entry {
+    height: 200px;
+    flex-basis: 300px;
+    white-space: nowrap;
+}
+
+.kc-page-entry-size {
+    position: absolute;
+    left: -48px;
+}
+
+.kc-page-entry-ratings-num {
+    position: absolute;
+    left: 64px;
+}
+
+.kc-page-entry-desc {
+    height: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: normal;
+    word-wrap: anywhere;
+}
+
+.kc-form-sortfilters {
+    text-align: right;
+}
+.kc-form-sortfilters .form-check .form-check-label {
+    margin-right: 32px;
+}
+
+.kc-form-sortfilters-label-rev {
+    position: absolute;
+    top: 0;
+    right: -20px;
+}
+
+.kc-box {
+    border: 1px solid #737373;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.kc-box-fit {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    width: 100%;
+}
+
+.kc-box-fit-horizontal {
+    margin-left: 2px;
+    margin-right: 0px;
+    margin-top: 2px;
+    width: 100%;
+}
+
+input.kc-box-fit {
+    width: calc(100% - 4px);
+}
+
+.kc-box-title {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.kc-box-pad {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.kc-box-pad-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.col-mapname {
+    color: #BDF4FF;
+}
