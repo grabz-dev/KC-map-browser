@@ -6,7 +6,7 @@ document.onreadystatechange = function() {
         });
 
         var data = {
-            _version: 1,
+            _version: 2,
             maps: [],
             game: "cw3", //"cw3", "pf"
             pageCur: 1,
@@ -22,7 +22,7 @@ document.onreadystatechange = function() {
             filterText: "",
             filterMinRating: 0,
             filterNumRatings: 0,
-            difficulty: ""
+            difficulty: "any"
         };
         load();
 
@@ -37,6 +37,16 @@ document.onreadystatechange = function() {
 
         //Handle all events and initialize HTML switches.
         (() => {
+            var toggle = function(elems, onoff) {
+                if(!(elems instanceof Array || elems instanceof NodeList))
+                    elems = [elems];
+
+                elems.forEach(elem => {
+                    if(onoff) elem.classList.add("btn-toggle");
+                    else      elem.classList.remove("btn-toggle");
+                });
+            }
+
             buttonPagePrevious.onclick = () => onPageSwitch(false);
             buttonPageNext.onclick = () => onPageSwitch(true);
             document.getElementById("buttonRefreshList").onclick = () => refresh();
@@ -86,10 +96,20 @@ document.onreadystatechange = function() {
             {
                 let elem = document.getElementById("buttongroupGame");
                 let buttons = elem.querySelectorAll(".btn[data-id]");
+                for(let i = 0; i < buttons.length; i++) {
+                    if(buttons[i].getAttribute("data-id") === data.game) {
+                        toggle(buttons[i], true);
+                        break;
+                    }
+                }
+
                 buttons.forEach(button => {
                     button.onclick = function() {
                         let game = this.getAttribute("data-id");
                         if(data.game !== game) {
+                            toggle(buttons, false);
+                            toggle(this, true);
+
                             data.game = game;
                             fetchMaps().then(() => {
                                 showMaps();
@@ -136,8 +156,18 @@ document.onreadystatechange = function() {
             {
                 let elem = document.getElementById("buttongroupDifficulty");
                 let buttons = elem.querySelectorAll(".btn[data-id]");
+                for(let i = 0; i < buttons.length; i++) {
+                    if(buttons[i].getAttribute("data-id") === data.difficulty) {
+                        toggle(buttons[i], true);
+                        break;
+                    }
+                }
+
                 buttons.forEach(button => {
                     button.onclick = function() {
+                        toggle(buttons, false);
+                        toggle(this, true);
+
                         data.difficulty = this.getAttribute("data-id");
                         showMaps();
                     }
@@ -170,7 +200,7 @@ document.onreadystatechange = function() {
          */
         function load() {
             let save = JSON.parse(localStorage.getItem("save"));
-            if(save != null && save._version <= data._version)
+            if(save != null && save._version === data._version)
                 Object.assign(data, save);
         }
 

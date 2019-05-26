@@ -16,6 +16,9 @@
 .btn:hover {
     color: #CCCCCC;
 }
+.btn-toggle {
+    box-shadow: 0 0 5px 2px #00D9FF inset !important;
+}
 
 .btn img {
     padding: 3px;
@@ -43,10 +46,10 @@
 }
 
 .btn-col-game-pf {
-    background: #685656;
-    background: -moz-linear-gradient(68.5deg, #685656 0%, #414141 100%);
-    background: -webkit-linear-gradient(68.5deg, #685656 0%,#414141 100%);
-    background: linear-gradient(68.5deg, #685656 0%,#414141 100%);
+    background: #6b5353;
+    background: -moz-linear-gradient(68.5deg, #6b5353 0%, #414141 100%);
+    background: -webkit-linear-gradient(68.5deg, #6b5353 0%,#414141 100%);
+    background: linear-gradient(68.5deg, #6b5353 0%,#414141 100%);
 }
 
 .btn-col-diff-easy {
