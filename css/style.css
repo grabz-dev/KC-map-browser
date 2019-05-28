@@ -9,7 +9,7 @@
 }
 
 body {
-    font-family: "Orbitron";
+    font-family: "Tempesta" !important;
     color: #dddddd;
     background-color: #222222;
     background-image: url("../assets/background.jpg");
@@ -25,6 +25,10 @@ input[type=text] {
     height: 23px;
 }
 
+.title {
+    font-family: "Orbitron" !important;
+}
+
 #page {
     line-height: 1.1;
 }
@@ -33,6 +37,12 @@ input[type=text] {
     height: 200px;
     flex-basis: 300px;
     white-space: nowrap;
+}
+
+.kc-page-entry-title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .kc-page-entry-size {
@@ -52,7 +62,6 @@ input[type=text] {
     white-space: normal;
     word-wrap: anywhere;
 }
-
 .kc-form-sortfilters {
     text-align: right;
 }
