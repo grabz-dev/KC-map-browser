@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Tempesta";
+    src: url(../assets/fonts/pf_tempesta_seven.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Orbitron";
+    src: url(../assets/fonts/orbitron_medium.otf) format("opentype");
+}
+
 body {
     font-family: "Orbitron";
     color: #dddddd;
