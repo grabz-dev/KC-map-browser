@@ -1,4 +1,14 @@
-document.onreadystatechange = function() {
+if(document.readyState === "complete")
+    main();
+else {
+    document.onreadystatechange = function() {
+        if(document.readyState === "complete") {
+            main();
+        }
+    }
+}
+
+function main() {
     ;requirejs(["src/MapDatabase", "util/util"], function(MapDatabase, util) {
         const web = Object.freeze({
             cw3: "creeperworld3",
