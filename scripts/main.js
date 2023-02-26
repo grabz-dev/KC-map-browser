@@ -298,9 +298,11 @@ function main() {
          * Load data from local storage.
          */
         function load() {
-            let save = JSON.parse(localStorage.getItem("save"));
-            if(save != null && save._version === data._version)
-                Object.assign(data, save);
+            try {
+                let save = JSON.parse(localStorage.getItem("kc-map-browser-save"));
+                if(save != null && save._version === data._version)
+                    Object.assign(data, save);
+            } catch(e) {}
         }
 
         /**
@@ -310,7 +312,7 @@ function main() {
             let save = Object.assign({}, data);
             delete save.maps;
 
-            localStorage.setItem("save", JSON.stringify(save));
+            localStorage.setItem("kc-map-browser-save", JSON.stringify(save));
         }
 
         /**
