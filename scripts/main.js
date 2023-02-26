@@ -16,7 +16,7 @@ function main() {
         });
 
         var data = {
-            _version: 2,
+            _version: 4,
             maps: [],
             game: "cw3", //"cw3", "pf"
             pageCur: 1,
@@ -32,7 +32,24 @@ function main() {
             filterText: "",
             filterMinRating: 0,
             filterNumRatings: 0,
-            difficulty: "any"
+            difficulty: "all",
+            difficultyMode: "percent", //"percent", "static"
+            difficultySwitches: {
+                static: {
+                    easy: [0.3, 999999],
+                    medium: [0.15, 0.3],
+                    hard: [0.075, 0.15],
+                    expert: [0, 0.075],
+                    all: [0, 999999]
+                },
+                percent: {
+                    easy: [0, 0.4],
+                    medium: [0.4, 0.7],
+                    hard: [0.7, 0.9],
+                    expert: [0.9, 1],
+                    all: [0, 1]
+                }
+            }
         };
         load();
 
@@ -161,6 +178,78 @@ function main() {
 
                     data.filterMinRating = number;
                     showMaps();
+                }
+            }
+            {
+                let elemStatic = document.getElementById('buttonDiffStatic');
+                let elemPrc = document.getElementById('buttonDiffPrc')
+                let menuDiffSwitches = document.getElementById('menuDiffSwitches')
+
+                let toggle = function(mode) {
+                    if(mode === 'static') {
+                        data.difficultyMode = 'static';
+                        elemStatic.classList.add('btn-toggle');
+                        elemPrc.classList.remove('btn-toggle');
+                    }
+                    else if(mode === 'percent') {
+                        data.difficultyMode = 'percent';
+                        elemPrc.classList.add('btn-toggle');
+                        elemStatic.classList.remove('btn-toggle');
+                    }
+                    for(let diff of ['easy','medium','hard','expert']) {
+                        let input1 = menuDiffSwitches.querySelector(`[data-id="${diff}-1"]`)
+                        if(data.difficultyMode === 'static') input1.value = data.difficultySwitches[data.difficultyMode][diff][0]
+                        else if(data.difficultyMode === 'percent') input1.value = data.difficultySwitches[data.difficultyMode][diff][1]
+                    }
+                    showMaps();
+                }
+                menuDiffSwitches.querySelector('[data-id=reset]').onclick = function() {
+                    data.difficultySwitches.static.easy = [0.3, 999999];
+                    data.difficultySwitches.static.medium = [0.15, 0.3];
+                    data.difficultySwitches.static.hard = [0.075, 0.15];
+                    data.difficultySwitches.static.expert = [0, 0.075];
+
+                    data.difficultySwitches.percent.easy = [0, 0.4];
+                    data.difficultySwitches.percent.medium = [0.4, 0.7];
+                    data.difficultySwitches.percent.hard = [0.7, 0.9];
+                    data.difficultySwitches.percent.expert = [0.9, 1];
+
+                    toggle(data.difficultyMode)
+                    showMaps();
+                }
+                menuDiffSwitches.querySelector('[data-id=apply]').onclick = function() {
+                    if(data.difficultyMode === 'static') {
+                        let inputEasy = menuDiffSwitches.querySelector(`[data-id="easy-1"]`).value;
+                        let inputMedium = menuDiffSwitches.querySelector(`[data-id="medium-1"]`).value;
+                        let inputHard = menuDiffSwitches.querySelector(`[data-id="hard-1"]`).value;
+                        let inputExpert = menuDiffSwitches.querySelector(`[data-id="expert-1"]`).value;
+
+                        data.difficultySwitches[data.difficultyMode].easy = [inputEasy, 999999];
+                        data.difficultySwitches[data.difficultyMode].medium = [inputMedium, inputEasy];
+                        data.difficultySwitches[data.difficultyMode].hard = [inputHard, inputMedium];
+                        data.difficultySwitches[data.difficultyMode].expert = [inputExpert, inputHard];
+                    }
+                    else if(data.difficultyMode === 'percent') {
+                        let inputEasy = menuDiffSwitches.querySelector(`[data-id="easy-1"]`).value;
+                        let inputMedium = menuDiffSwitches.querySelector(`[data-id="medium-1"]`).value;
+                        let inputHard = menuDiffSwitches.querySelector(`[data-id="hard-1"]`).value;
+                        let inputExpert = menuDiffSwitches.querySelector(`[data-id="expert-1"]`).value;
+
+                        data.difficultySwitches[data.difficultyMode].easy = [0, inputEasy];
+                        data.difficultySwitches[data.difficultyMode].medium = [inputEasy, inputMedium];
+                        data.difficultySwitches[data.difficultyMode].hard = [inputMedium, inputHard];
+                        data.difficultySwitches[data.difficultyMode].expert = [inputHard, inputExpert];
+                    }
+
+                    showMaps();
+                }
+
+                toggle(data.difficultyMode)
+                elemStatic.onclick = function() {
+                    toggle('static')
+                }
+                elemPrc.onclick = function() {
+                    toggle('percent');
                 }
             }
             {
@@ -320,14 +409,29 @@ function main() {
                 maps = maps.filter(val => val.height <= data.filterMaxHeight);
             }
 
-            //Filter all elements that don't match the specified difficulty.
-            var difficulty = getDifficultyFromName(data.difficulty);
-            if(difficulty[0] > 0 || difficulty[1] < Infinity) {
-                maps = maps.filter(val => {
-                    var ratio = val.scores / val.downloads;
-                    return ratio >= difficulty[0] && ratio < difficulty[1];
-                });
+            if(data.difficultyMode === "static") {
+                //Filter all elements that don't match the specified difficulty.
+                let difficulty = data.difficultySwitches[data.difficultyMode][data.difficulty];
+                if(difficulty[0] > 0 || difficulty[1] < Infinity) {
+                    maps = maps.filter(val => {
+                        var ratio = val.scores / val.downloads;
+                        return ratio >= difficulty[0] && ratio < difficulty[1];
+                    });
+                }
             }
+            else if(data.difficultyMode === "percent") {
+                maps.sort((a, b) => (a.scores / a.downloads) < (b.scores / b.downloads))
+                let difficulty = data.difficultySwitches[data.difficultyMode][data.difficulty];
+                console.log(data.difficultyMode, data.difficulty)
+                let length = maps.length;
+                let start = difficulty[0] * length;
+                if(start > 0) start++;
+
+                let end = difficulty[1] * length;
+                maps = maps.slice(start, end + 1)
+                maps.sort((a, b) => a.id < b.id)
+            }
+
 
             //Sort the maps based on the current selected sort filter.
             switch(data.sortCur) {
@@ -422,24 +526,6 @@ function main() {
                     elems.page.children[elems.page.children.length - 1].style.visibility = "hidden";
                 }
             }
-        }
-
-        /**
-         * Map difficulty name to a bracket of (scores/downloads).
-         * @param {string} str - Difficulty name.
-         * @returns {[number, number]} - First number is the minimum bracket (inclusive), second number is the maximum bracket (exclusive).
-         */
-        function getDifficultyFromName(str) {
-            if(str === "easy")
-                return [0.3, Infinity];
-            else if(str === "medium" || str === "normal")
-                return [0.15, 0.3];
-            else if(str === "hard")
-                return [0.075, 0.15];
-            else if(str === "expert")
-                return [0, 0.075];
-            else
-                return [0, Infinity];
         }
     });
 }

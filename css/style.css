@@ -113,3 +113,14 @@ input.kc-box-fit {
 .col-mapname {
     color: #BDF4FF;
 }
+
+.kc-diff-label {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.kc-diff-label input {
+    width: 80px;
+}
